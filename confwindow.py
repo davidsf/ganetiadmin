@@ -69,6 +69,7 @@ class ConfWindow(Gtk.Window):
 
 		self.input_password = Gtk.Entry()
 		self.input_password.set_visibility(False)
+		self.input_password.connect("activate", self.on_ok_button_clicked)
 		hbox.pack_start(self.input_password, False, True, 0)
 
 		listbox.add(row)
