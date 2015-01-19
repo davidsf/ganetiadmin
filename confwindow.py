@@ -11,6 +11,7 @@ class ConfWindow(Gtk.Window):
 		Gtk.Window.__init__(self, title="Configuration")
 		self.set_border_width(10)
 		self.set_position(Gtk.WindowPosition.CENTER)
+
 		hbox = Gtk.Box(spacing=6)
 		self.add(hbox)
 
@@ -28,7 +29,7 @@ class ConfWindow(Gtk.Window):
 		hbox.pack_start(label, True, True, 0)
 
 		self.input_ip = Gtk.Entry()
-		hbox.pack_start(self.input_ip, True, True, 0)
+		hbox.pack_start(self.input_ip, False, True, 0)
 
 		listbox.add(row)
 
@@ -36,13 +37,12 @@ class ConfWindow(Gtk.Window):
 		hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=50)
 		row.add(hbox)
 
-
 		label = Gtk.Label("Cluster Port:")
 		hbox.pack_start(label, True, True, 0)
 
 		self.input_port = Gtk.Entry()
 		self.input_port.set_text("5080")
-		hbox.pack_start(self.input_port, True, True, 0)
+		hbox.pack_start(self.input_port, False, True, 0)
 
 		listbox.add(row)
 
@@ -55,7 +55,7 @@ class ConfWindow(Gtk.Window):
 
 		self.input_username = Gtk.Entry()
 		self.input_username.set_text("admin")
-		hbox.pack_start(self.input_username, True, True, 0)
+		hbox.pack_start(self.input_username, False, True, 0)
 
 		listbox.add(row)
 
@@ -69,7 +69,7 @@ class ConfWindow(Gtk.Window):
 
 		self.input_password = Gtk.Entry()
 		self.input_password.set_visibility(False)
-		hbox.pack_start(self.input_password, True, True, 0)
+		hbox.pack_start(self.input_password, False, True, 0)
 
 		listbox.add(row)
 
