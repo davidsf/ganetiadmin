@@ -23,6 +23,9 @@ class ganeti_conn:
 		response = connection.getresponse()
 		data = json.loads(response.read().decode())
 
+		if 'message' in data and data['message']=="Unauthorized":
+			return False
+
 		params.store.clear()
 		for d in data:
 			params.store.append([d['name'], d['status'], d['network_port'], d['pnode'], d['beparams']['memory']])

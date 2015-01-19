@@ -90,7 +90,13 @@ class ConfWindow(Gtk.Window):
 		username = self.input_username.get_text()
 		password = self.input_password.get_text()
 		params.conn = conn.ganeti_conn(cluster_ip, cluster_port, username, password)
-
-		params.conn.update()
-		self.hide()
-		self.callback()
+		result = params.conn.update()
+		if result==False:
+			dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.INFO,
+			Gtk.ButtonsType.OK, "Connection Error")
+			dialog.format_secondary_text("Username or password incorrect")
+			dialog.run()
+			dialog.destroy()
+		else:
+			self.hide()
+			self.callback()
