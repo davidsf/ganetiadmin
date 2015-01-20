@@ -43,22 +43,27 @@ class GaneAdmin(Gtk.Window):
 
 		renderer = Gtk.CellRendererText()
 		column = Gtk.TreeViewColumn("Machine", renderer, text=0)
+		column.set_sort_column_id(0)
 		tree.append_column(column)
 
 		renderer = Gtk.CellRendererText()
 		column = Gtk.TreeViewColumn("Status", renderer, text=1)
+		column.set_sort_column_id(1)
 		tree.append_column(column)
 
 		renderer = Gtk.CellRendererText()
 		column = Gtk.TreeViewColumn("Port", renderer, text=2)
+		column.set_sort_column_id(2)
 		tree.append_column(column)
 
 		renderer = Gtk.CellRendererText()
 		column = Gtk.TreeViewColumn("Primary node", renderer, text=3)
+		column.set_sort_column_id(3)
 		tree.append_column(column)
 
 		renderer = Gtk.CellRendererText()
 		column = Gtk.TreeViewColumn("Memory", renderer, text=4)
+		column.set_sort_column_id(4)
 		tree.append_column(column)
 
 		swH = Gtk.ScrolledWindow()
