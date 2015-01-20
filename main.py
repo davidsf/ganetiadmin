@@ -35,7 +35,10 @@ class GaneAdmin(Gtk.Window):
 		self.box = Gtk.Box(spacing=6)
 		self.add(self.box)
 
-		tree = Gtk.TreeView(params.store)
+		sorted_model = Gtk.TreeModelSort(model=params.store)
+		sorted_model.set_sort_column_id(0, Gtk.SortType.ASCENDING)
+
+		tree = Gtk.TreeView(sorted_model)
 		tree.connect("row-activated", self.row_clicked)
 
 		renderer = Gtk.CellRendererText()
