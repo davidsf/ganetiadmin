@@ -27,7 +27,7 @@ class InfoWindow(Gtk.Window):
 
 		self.input_ip = Gtk.Entry()
 		self.input_ip.set_text(info['pnode'])
-		hbox.pack_start(self.input_ip, True, True, 0)
+		hbox.pack_start(self.input_ip, False, True, 0)
 
 		listbox.add(row)
 
@@ -40,7 +40,7 @@ class InfoWindow(Gtk.Window):
 
 		self.input_ip = Gtk.Entry()
 		self.input_ip.set_text(','.join(info['snodes']))
-		hbox.pack_start(self.input_ip, True, True, 0)
+		hbox.pack_start(self.input_ip, False, True, 0)
 
 		listbox.add(row)
 
@@ -53,7 +53,7 @@ class InfoWindow(Gtk.Window):
 
 		self.input_ip = Gtk.Entry()
 		self.input_ip.set_text(','.join(info['nic.bridges']))
-		hbox.pack_start(self.input_ip, True, True, 0)
+		hbox.pack_start(self.input_ip, False, True, 0)
 
 		listbox.add(row)
 
@@ -66,7 +66,7 @@ class InfoWindow(Gtk.Window):
 
 		self.input_ip = Gtk.Entry()
 		self.input_ip.set_text(str(info['beparams']['memory']))
-		hbox.pack_start(self.input_ip, True, True, 0)
+		hbox.pack_start(self.input_ip, False, True, 0)
 
 		listbox.add(row)
 
@@ -79,7 +79,7 @@ class InfoWindow(Gtk.Window):
 
 		self.input_ip = Gtk.Entry()
 		self.input_ip.set_text(str(info['beparams']['memory']))
-		hbox.pack_start(self.input_ip, True, True, 0)
+		hbox.pack_start(self.input_ip, False, True, 0)
 
 		listbox.add(row)
 
@@ -92,7 +92,7 @@ class InfoWindow(Gtk.Window):
 
 		self.input_ip = Gtk.Entry()
 		self.input_ip.set_text(str(info['beparams']['vcpus']))
-		hbox.pack_start(self.input_ip, True, True, 0)
+		hbox.pack_start(self.input_ip, False, True, 0)
 
 		listbox.add(row)
 
