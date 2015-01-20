@@ -16,3 +16,8 @@ Install
 * Execute:
 
 			python3 main.py
+
+License
+-------
+
+This software is released under GNU/GPL version 3
