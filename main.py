@@ -38,53 +38,72 @@ class GaneAdmin(Gtk.Window):
 		sorted_model = Gtk.TreeModelSort(model=params.store)
 		sorted_model.set_sort_column_id(0, Gtk.SortType.ASCENDING)
 
-		tree = Gtk.TreeView(sorted_model)
-		tree.connect("row-activated", self.row_clicked)
+		self.tree = Gtk.TreeView(sorted_model)
+		self.tree.connect("row-activated", self.row_clicked)
+		self.tree.connect("button_press_event", self.mouse_click)
 
 		renderer = Gtk.CellRendererText()
 		column = Gtk.TreeViewColumn("Machine", renderer, text=0)
 		column.set_sort_column_id(0)
-		tree.append_column(column)
+		self.tree.append_column(column)
 
 		renderer = Gtk.CellRendererText()
 		column = Gtk.TreeViewColumn("Status", renderer, text=1)
 		column.set_sort_column_id(1)
-		tree.append_column(column)
+		self.tree.append_column(column)
 
 		renderer = Gtk.CellRendererText()
 		column = Gtk.TreeViewColumn("Port", renderer, text=2)
 		column.set_sort_column_id(2)
-		tree.append_column(column)
+		self.tree.append_column(column)
 
 		renderer = Gtk.CellRendererText()
 		column = Gtk.TreeViewColumn("Primary node", renderer, text=3)
 		column.set_sort_column_id(3)
-		tree.append_column(column)
+		self.tree.append_column(column)
 
 		renderer = Gtk.CellRendererText()
 		column = Gtk.TreeViewColumn("Memory", renderer, text=4)
 		column.set_sort_column_id(4)
-		tree.append_column(column)
+		self.tree.append_column(column)
 
 		swH = Gtk.ScrolledWindow()
 		swH.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
-		swH.add(tree)
+		swH.add(self.tree)
 
 		self.box.pack_start(swH, True, True, 0)
 
+		self.menu()
+
 	def row_clicked(self, widget, row, col):
-		global connection, headers, machines
+		self.show_info_window()
 
-		model = widget.get_model()
-		instance_name = model[row][0]
-
+	def show_info_window(self):
+		selection = self.tree.get_selection()
+		(model, iter) = selection.get_selected()
+		if iter != None:
+			instance_name = model[iter][0]
 		data = params.conn.instance_info(instance_name)
 		info = infowindow.InfoWindow(instance_name)
 		info.show_all()
 
 
+	def info_window_cb(self, widget):
+		self.show_info_window()
+
 	def update_clicked(self, widget):
 		params.conn.update()
+
+	def menu(self):
+		self.treeview_menu = Gtk.Menu()
+		menu_item = Gtk.MenuItem("Information")
+		menu_item.connect("activate", self.info_window_cb)
+		self.treeview_menu.append(menu_item)
+
+	def mouse_click(self, tv, event):
+		if event.button == 3:
+			self.treeview_menu.show_all()
+			self.treeview_menu.popup(None, None, None, None, 1, 0)
 
 def showall():
 	global win
