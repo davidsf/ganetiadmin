@@ -6,7 +6,7 @@ import params
 class InfoWindow(Gtk.Window):
 	def	__init__(self, instance_name):
 		info = params.machines[instance_name]
-		Gtk.Window.__init__(self, title="Machine info")
+		Gtk.Window.__init__(self, title="Machine info: " + instance_name)
 
 		self.instance_name = instance_name
 		self.set_border_width(10)
