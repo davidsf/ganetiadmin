@@ -79,10 +79,7 @@ class GaneAdmin(Gtk.Window):
 		self.show_info_window()
 
 	def show_info_window(self):
-		selection = self.tree.get_selection()
-		(model, iter) = selection.get_selected()
-		if iter != None:
-			instance_name = model[iter][0]
+		instance_name = self.get_selected_instance()
 		data = params.conn.instance_info(instance_name)
 		info = infowindow.InfoWindow(instance_name)
 		info.show_all()
@@ -90,6 +87,10 @@ class GaneAdmin(Gtk.Window):
 
 	def info_window_cb(self, widget):
 		self.show_info_window()
+
+	def reboot_cb(self, widget):
+		instance_name = self.get_selected_instance()
+		params.conn.reboot(instance_name)
 
 	def update_clicked(self, widget):
 		params.conn.update()
@@ -100,10 +101,31 @@ class GaneAdmin(Gtk.Window):
 		menu_item.connect("activate", self.info_window_cb)
 		self.treeview_menu.append(menu_item)
 
+		menu_item = Gtk.MenuItem("Reboot")
+		menu_item.connect("activate", self.reboot_cb)
+		self.treeview_menu.append(menu_item)
+
 	def mouse_click(self, tv, event):
 		if event.button == 3:
+			instance_name = self.get_selected_instance()
+			info = params.machines[instance_name]
+			for menuitem in self.treeview_menu.get_children():
+				if menuitem.get_label()=="Reboot":
+					if info['status']!="running":
+						menuitem.set_sensitive(False)
+					else:
+						menuitem.set_sensitive(True)
+
 			self.treeview_menu.show_all()
 			self.treeview_menu.popup(None, None, None, None, 1, 0)
+
+	def get_selected_instance(self):
+		selection = self.tree.get_selection()
+		(model, iter) = selection.get_selected()
+		if iter != None:
+			return model[iter][0]
+		else:
+			return None
 
 def showall():
 	global win
