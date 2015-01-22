@@ -44,3 +44,7 @@ class ganeti_conn:
 	def start(self, instance_name):
 		connection.request('PUT', '/2/instances/'+instance_name+'/startup', headers=headers)
 		response = connection.getresponse()
+
+	def shutdown(self, instance_name):
+		connection.request('PUT', '/2/instances/'+instance_name+'/shutdown', headers=headers)
+		response = connection.getresponse()

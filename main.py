@@ -96,6 +96,10 @@ class GaneAdmin(Gtk.Window):
 		instance_name = self.get_selected_instance()
 		params.conn.start(instance_name)
 
+	def shutdown_cb(self, widget):
+		instance_name = self.get_selected_instance()
+		params.conn.shutdown(instance_name)
+
 	def update_clicked(self, widget):
 		params.conn.update()
 
@@ -113,6 +117,10 @@ class GaneAdmin(Gtk.Window):
 		menu_item.connect("activate", self.start_cb)
 		self.treeview_menu.append(menu_item)
 
+		menu_item = Gtk.MenuItem("Shutdown")
+		menu_item.connect("activate", self.shutdown_cb)
+		self.treeview_menu.append(menu_item)
+
 	def mouse_click(self, tv, event):
 		if event.button == 3:
 			instance_name = self.get_selected_instance()
@@ -125,6 +133,12 @@ class GaneAdmin(Gtk.Window):
 						menuitem.set_sensitive(True)
 				if menuitem.get_label()=="Start":
 					if info['status']!="running":
+						menuitem.set_sensitive(True)
+					else:
+						menuitem.set_sensitive(False)
+
+				if menuitem.get_label()=="Shutdown":
+					if info['status']=="running":
 						menuitem.set_sensitive(True)
 					else:
 						menuitem.set_sensitive(False)
