@@ -39,3 +39,8 @@ class ganeti_conn:
 
 	def reboot(self, instance_name):
 		connection.request('POST', '/2/instances/'+instance_name+'/reboot', headers=headers)
+		response = connection.getresponse()
+
+	def start(self, instance_name):
+		connection.request('PUT', '/2/instances/'+instance_name+'/startup', headers=headers)
+		response = connection.getresponse()

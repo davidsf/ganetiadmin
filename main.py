@@ -92,6 +92,10 @@ class GaneAdmin(Gtk.Window):
 		instance_name = self.get_selected_instance()
 		params.conn.reboot(instance_name)
 
+	def start_cb(self, widget):
+		instance_name = self.get_selected_instance()
+		params.conn.start(instance_name)
+
 	def update_clicked(self, widget):
 		params.conn.update()
 
@@ -105,6 +109,10 @@ class GaneAdmin(Gtk.Window):
 		menu_item.connect("activate", self.reboot_cb)
 		self.treeview_menu.append(menu_item)
 
+		menu_item = Gtk.MenuItem("Start")
+		menu_item.connect("activate", self.start_cb)
+		self.treeview_menu.append(menu_item)
+
 	def mouse_click(self, tv, event):
 		if event.button == 3:
 			instance_name = self.get_selected_instance()
@@ -115,6 +123,11 @@ class GaneAdmin(Gtk.Window):
 						menuitem.set_sensitive(False)
 					else:
 						menuitem.set_sensitive(True)
+				if menuitem.get_label()=="Start":
+					if info['status']!="running":
+						menuitem.set_sensitive(True)
+					else:
+						menuitem.set_sensitive(False)
 
 			self.treeview_menu.show_all()
 			self.treeview_menu.popup(None, None, None, None, 1, 0)
