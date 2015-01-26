@@ -40,7 +40,7 @@ class GaneAdmin(Gtk.Window):
 
 		self.tree = Gtk.TreeView(sorted_model)
 		self.tree.connect("row-activated", self.row_clicked)
-		self.tree.connect("button_press_event", self.mouse_click)
+		self.tree.connect("button_release_event", self.mouse_click)
 
 		renderer = Gtk.CellRendererText()
 		column = Gtk.TreeViewColumn("Machine", renderer, text=0)
