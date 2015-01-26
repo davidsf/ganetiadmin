@@ -90,7 +90,14 @@ class GaneAdmin(Gtk.Window):
 
 	def reboot_cb(self, widget):
 		instance_name = self.get_selected_instance()
-		params.conn.reboot(instance_name)
+		dialog = ConfirmDialog(self)
+		dialog.set_label("Would you like to reboot instance " + instance_name + " ?")
+		response = dialog.run()
+
+		if response == Gtk.ResponseType.OK:
+			params.conn.reboot(instance_name)
+
+		dialog.destroy()
 
 	def start_cb(self, widget):
 		instance_name = self.get_selected_instance()
@@ -153,6 +160,20 @@ class GaneAdmin(Gtk.Window):
 			return model[iter][0]
 		else:
 			return None
+
+class ConfirmDialog(Gtk.Dialog):
+
+	def __init__(self, parent):
+		Gtk.Dialog.__init__(self, "Confirmation", parent, 0,
+			(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OK, Gtk.ResponseType.OK))
+
+		self.set_default_size(150, 100)
+
+	def set_label(self, text):
+		label = Gtk.Label(text)
+		box = self.get_content_area()
+		box.add(label)
+		self.show_all()
 
 def showall():
 	global win
