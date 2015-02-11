@@ -70,18 +70,22 @@ class InfoWindow(Gtk.Window):
 
 		listbox.add(row)
 
-		row = Gtk.ListBoxRow()
-		hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=50)
-		row.add(hbox)
+		disks = info['disk.sizes']
+		i = 0
+		for disk in disks:
+			row = Gtk.ListBoxRow()
+			hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=50)
+			row.add(hbox)
 
-		label = Gtk.Label("Memory (Mb):")
-		hbox.pack_start(label, True, True, 0)
+			label = Gtk.Label("Disk Size #"+str(i)+" (Mb):")
+			hbox.pack_start(label, True, True, 0)
 
-		self.input_ip = Gtk.Entry()
-		self.input_ip.set_text(str(info['beparams']['memory']))
-		hbox.pack_start(self.input_ip, False, True, 0)
+			self.input_ip = Gtk.Entry()
+			self.input_ip.set_text(str(info['disk.sizes'][i]))
+			hbox.pack_start(self.input_ip, False, True, 0)
 
-		listbox.add(row)
+			listbox.add(row)
+			i=i+1
 
 		row = Gtk.ListBoxRow()
 		hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=50)
