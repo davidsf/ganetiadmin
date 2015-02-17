@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from gi.repository import Gtk, GLib, Gio
+from gi.repository import Gtk, GLib, Gio, Gdk
 from http.client import HTTPSConnection
 from base64 import b64encode
 import json
@@ -114,11 +114,26 @@ class GaneAdmin(Gtk.Window):
 
 		dialog.destroy()
 
+	def connect_clipboard_cb(self, widget):
+		instance_name = self.get_selected_instance()
+
+		info = params.machines[instance_name]
+
+		data = "vncviewer 127.0.0.1::" + str(info['network_port']) + " -via " + info['pnode']
+
+		clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
+		clipboard.set_text(data, -1)
+		clipboard.store()
+
 	def update_clicked(self, widget):
 		params.conn.update()
 
 	def menu(self):
 		self.treeview_menu = Gtk.Menu()
+		menu_item = Gtk.MenuItem("Copy connect command to clipboard")
+		menu_item.connect("activate", self.connect_clipboard_cb)
+		self.treeview_menu.append(menu_item)
+
 		menu_item = Gtk.MenuItem("Information")
 		menu_item.connect("activate", self.info_window_cb)
 		self.treeview_menu.append(menu_item)
