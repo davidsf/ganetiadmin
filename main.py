@@ -105,7 +105,14 @@ class GaneAdmin(Gtk.Window):
 
 	def shutdown_cb(self, widget):
 		instance_name = self.get_selected_instance()
-		params.conn.shutdown(instance_name)
+		dialog = ConfirmDialog(self)
+		dialog.set_label("Would you like to shutdown instance " + instance_name + " ?")
+		response = dialog.run()
+
+		if response == Gtk.ResponseType.OK:
+			params.conn.shutdown(instance_name)
+
+		dialog.destroy()
 
 	def update_clicked(self, widget):
 		params.conn.update()
